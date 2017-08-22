@@ -33,8 +33,8 @@ Character::~Character()
 }
 
 
-void Character::move(int speedPlus_minus) //角色横向移动及动画
-{	
+void Character::move(int speedPlus_minus, float delta) //角色横向移动及动画
+{
 	auto animation = Animation3D::create("res/3Dsprite&action/run_to_stand_final.c3b");  //获取骨骼信息
 
 	if (speedPlus_minus == 0) //执行跑步恢复至站立的动画
@@ -49,17 +49,17 @@ void Character::move(int speedPlus_minus) //角色横向移动及动画
 
 		auto play_recover_stand = Animate3D::create(animation, 0.5f, 0.68f);   //创建3D恢复动画	
 		play_recover_stand->setSpeed(100.0f);
-		
+
 		sp_man->runAction(play_recover_stand);
-	
+
 		return;
 	}
 
 	auto play_move = Animate3D::create(animation, 0.f, 0.5f);   //创建3D动画
 
-	auto ac_move = MoveBy::create(0.1f, Point(speedPlus_minus*speed, 0)); //移动动作
+	auto ac_move = MoveBy::create(0.1f, Point(speedPlus_minus * delta * 500, 0)); //移动动作
 
-	auto action_turn = RotateTo::create(0, Vec3(0, speedPlus_minus*90, 0));   //设定旋转动作，操纵Sprite转动
+	auto action_turn = RotateTo::create(0, Vec3(0, speedPlus_minus * 90, 0));   //设定旋转动作，操纵Sprite转动
 
 	//动画执行完以后的回调 => 防止一个动画未结束，另一个动画就开始
 	auto *actionMove =
@@ -88,7 +88,7 @@ int Character::get_speed()
 
 void Character::jump()  //跳跃
 {
-	auto ac_jump = JumpBy::create(0.1f, Point(0, 0),40, 1);
+	auto ac_jump = JumpBy::create(0.1f, Point(0, 0), 40, 1);
 	sp_man->runAction(ac_jump);
 }
 

@@ -56,7 +56,7 @@ VirtualRockerAndButton * VirtualRockerAndButton::getInstance(Layer* layer, Size 
 
 bool VirtualRockerAndButton::onTouchBegan(cocos2d::Touch * tTouch, cocos2d::Event * eEvent)
 {
-	CCLOG("%f, %f", tTouch->getLocation().x, tTouch->getLocation().y);
+	//CCLOG("%f, %f", tTouch->getLocation().x, tTouch->getLocation().y);
 
 	//触摸起始点在摇杆范围内才返回true
 	if (tempLayer->getChildByName("sp_VirtualCircle")->getBoundingBox().containsPoint(tTouch->getLocation()))
@@ -108,7 +108,7 @@ void VirtualRockerAndButton::onTouchesMoved(cocos2d::Touch * tTouch, cocos2d::Ev
 			tempLayer->getChildByName("sp_VirtualPoint")
 				->setPosition(Vec2(inSideB + tempLayer->getChildByName("sp_VirtualCircle")->getPosition().x, inSideA + tempLayer->getChildByName("sp_VirtualCircle")->getPosition().y));
 
-			CCLOG("Nowdistance:%f, lengthA:%f, sinAngle:%f, x:%f, y:%f", Nowdistance, outSideA, sinAngle, inSideB, inSideA);
+			//CCLOG("Nowdistance:%f, lengthA:%f, sinAngle:%f, x:%f, y:%f", Nowdistance, outSideA, sinAngle, inSideB, inSideA);
 		}
 	}
 }

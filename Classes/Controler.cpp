@@ -66,7 +66,7 @@ void Controler::CreateUpdateUI(Layer * Layer_UI, Size visSize, unsigned long lon
 		Layer_UI->addChild(icon_Time, 2);
 		Layer_UI->addChild(icon_Coin, 2);
 	}
-	
+
 	Layer_UI->removeChild(time_left);
 	Layer_UI->removeChild(get_coin_number);
 	Layer_UI->removeChild(get_score);
@@ -134,10 +134,10 @@ void Controler::CreateUpdateUI(Layer * Layer_UI, Size visSize, unsigned long lon
 
 	Layer_UI->addChild(get_score, 2);
 
-	
+
 }
 
-void Controler::tiledMapScroll(Layer * layer, Layer * layer_BG, Layer *  layer_UI, Layer *  layer_Controler, TMXTiledMap * tiledMap, Node *character)
+void Controler::tiledMapScroll(Layer * layer, Layer * layer_BG, Layer *  layer_UI, Layer *  layer_Controler, TMXTiledMap * tiledMap, Node *character, float delta)
 {
 	Layer *parent = (Layer *)layer->getParent();
 	Size winSize = Director::getInstance()->getWinSize();   //获取屏幕的尺寸
@@ -166,10 +166,27 @@ void Controler::tiledMapScroll(Layer * layer, Layer * layer_BG, Layer *  layer_U
 	//计算屏幕中心点和要移动至的目的点之间的距离
 	Point distance = centerPos - destPos;
 
-	layer_BG->setPosition(-distance.x / 1.05, layer_BG->getPosition().y);
+	/*layer_BG->setPosition(-distance.x / 1.05, layer_BG->getPosition().y);
 	layer_UI->setPosition(-distance);
 	layer_Controler->setPosition(-distance);
-	layer->setPosition(distance);
+	layer->setPosition(distance);*/
+
+	CCLOG("distanceX: %f  distanceY: %f", distance.x, distance.y);
+
+	static auto temp_distanceX = 0.f;
+
+	if (distance.x < temp_distanceX) //=>layer左移
+	{
+		auto pos = layer->getPosition();
+		layer->setPosition(pos.x - 2 * delta * 500, pos.y);
+		temp_distanceX = distance.x;
+	}
+	else if (distance.x > temp_distanceX) //=>layer右移
+	{
+		auto pos = layer->getPosition();
+		layer->setPosition(pos.x + 2 * delta * 500, pos.y);  //角色移动1倍，场景移动两倍=>保证相对位置
+		temp_distanceX = distance.x;
+	}
 }
 
 void Controler::createBackGround(Layer *Layer_BG, Size visSize)//创建游戏背景

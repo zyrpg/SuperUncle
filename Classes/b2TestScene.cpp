@@ -109,7 +109,7 @@ void b2TestScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d:
 
 void b2TestScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event *)
 {
-	CCLOG("Released!");
+	//CCLOG("Released!");
 }
 
 void b2TestScene::iniPhysics()
@@ -172,7 +172,7 @@ void b2TestScene::iniPhysics()
 
 void b2TestScene::addNewSpriteAtPosition(cocos2d::Point p)
 {
-	CCLOG("Add sprite x: %d, y: %d", p.x, p.y);
+	//CCLOG("Add sprite x: %d, y: %d", p.x, p.y);
 
 	//创建物理引擎精灵对象
 
@@ -247,7 +247,7 @@ void b2TestScene::BeginContact(b2Contact * contact)  //不能在碰撞检测里销毁刚体
 
 		bodyB->ApplyForce(b2Vec2::b2Vec2(0, 6*PTM_RATIO), bodyB->GetWorldCenter(), false);
 		
-		CCLOG("delete box!");
+		//CCLOG("delete box!");
 		vec_body_delete.push_back(bodyA);
 	}
 }
